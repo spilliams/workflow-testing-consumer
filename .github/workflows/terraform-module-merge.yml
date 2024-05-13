@@ -1,0 +1,25 @@
+---
+name: "Terraform Module PR Merged"
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  example:
+    name: "Example"
+    uses: ./.github/workflows/reusable-terraform-module-changelog.yml
+    permissions:
+      contents: write
+    with:
+      compare_from: main^
+      compare_to: main
+      release_module_versions: true
+    secrets:
+      PAT_WORKFLOW_WRITE: ${{ secrets.TAG_RELEASE_PAT }}

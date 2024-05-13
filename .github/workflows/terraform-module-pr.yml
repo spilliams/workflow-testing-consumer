@@ -1,0 +1,28 @@
+---
+name: "Terraform Module PR Open"
+
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+    branches:
+      - main
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  example:
+    name: "Example"
+    uses: ./.github/workflows/reusable-terraform-module-changelog.yml
+    permissions:
+      contents: read
+    with:
+      compare_from: ${{ github.base_ref }}
+      compare_to: ${{ github.head_ref }}
+      release_module_versions: false
+    secrets:
+      PAT_WORKFLOW_WRITE: ${{ secrets.TAG_RELEASE_PAT }}

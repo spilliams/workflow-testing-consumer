@@ -1,0 +1,33 @@
+---
+name: "Terraform Module Release"
+
+on:
+  workflow_dispatch:
+    inputs:
+      compare_from:
+        description: a git ref to compare _from_ for determining module versions
+        type: string
+      compare_to:
+        description: a git ref to compare _to_ for determining module versions
+        type: string
+      release_module_versions:
+        description: tag and release the module version(s)?
+        type: boolean
+        default: false
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  example:
+    name: "Example"
+    uses: ./.github/workflows/reusable-terraform-module-changelog.yml
+    permissions:
+      contents: write
+    with:
+      compare_from: ${{ inputs.compare_from }}
+      compare_to: ${{ inputs.compare_to }}
+      release_module_versions: ${{ inputs.release_module_versions }}
+    secrets:
+      PAT_WORKFLOW_WRITE: ${{ secrets.TAG_RELEASE_PAT }}
