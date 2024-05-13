@@ -14,7 +14,7 @@ defaults:
 jobs:
   example:
     name: "Example"
-    uses: ./.github/workflows/reusable-terraform-module-changelog.yml
+    uses: spilliams/workflow-testing/.github/workflows/reusable-terraform-module-changelog.yml@main
     permissions:
       contents: write
     with:
